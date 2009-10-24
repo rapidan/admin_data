@@ -1,4 +1,5 @@
 class AdminData::BaseController < ApplicationController
+  puts "Loading: AdminData::BaseController "
 
   helper_method :admin_data_is_allowed_to_update?
 
@@ -6,7 +7,7 @@ class AdminData::BaseController < ApplicationController
 
   include AdminData::Chelper
 
-  before_filter :ensure_is_allowed_to_view , :build_klasses, :build_drop_down_for_klasses
+  before_filter :ensure_is_allowed_to_view, :build_klasses, :build_drop_down_for_klasses
 
   private
 
@@ -35,21 +36,23 @@ class AdminData::BaseController < ApplicationController
     unless defined? $admin_data_klasses
       model_dir = File.join(RAILS_ROOT,'app','models')
       model_names = Dir.chdir(model_dir) { Dir["**/*.rb"] }
-
-      plugins_dir = File.join(RAILS_ROOT, 'vendor', 'plugins')
-      Dir.foreach(plugins_dir) do |x|
-        plugin_model_dir = File.join(plugins_dir, x, 'app', 'models')
-        if File.directory?(plugin_model_dir)
-          model_names << Dir.chdir(plugin_model_dir){ Dir["**/*.rb"]}
-        end
-      end
-      model_names = model_names.flatten.uniq
-
+      model_names = extend_with_plugins_models(model_names)
       klasses = get_klass_names(model_names)
       $admin_data_klasses = remove_klasses_without_table(klasses).
                                              sort_by {|r| r.name.underscore}
     end
     @klasses = $admin_data_klasses
+  end
+
+  def extend_with_plugins_models(model_names)
+    plugins_dir = File.join(RAILS_ROOT, 'vendor', 'plugins')
+
+    Dir.foreach(plugins_dir) do |plugin_dir|
+      plugin_model_dir = File.join(plugins_dir, plugin_dir, 'app', 'models')
+      model_names << Dir.chdir(plugin_model_dir){ Dir["**/*.rb"]} if File.directory?(plugin_model_dir)
+    end if File.directory?(plugins_dir)
+
+    model_names.flatten.uniq
   end
 
   def remove_klasses_without_table(klasses)
