@@ -17,7 +17,6 @@ class AdminData::BaseControllerTest < ActionController::TestCase
   context 'testing private method extend_with_plugins_models' do
     setup do
       @controller = AdminData::DiagnosticController.new
-      puts "#{@controller.class.filter_chain.inspect}"
     end
 
     should 'get awesome model filename from the awesome plugin' do
