@@ -1,5 +1,4 @@
 class AdminData::BaseController < ApplicationController
-  puts "Loading: AdminData::BaseController "
 
   helper_method :admin_data_is_allowed_to_update?
 
