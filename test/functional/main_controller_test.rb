@@ -75,6 +75,10 @@ class AdminData::MainControllerTest < ActionController::TestCase
     end
   end
 
+  should_have_before_filter :ensure_is_allowed_to_update, :only => [:destroy, :del, :edit, :update, :create]
+  should_have_before_filter :get_class_from_params, :only => [ :table_structure, :show, :destroy, :del, :edit,:new,:update, :create]
+  should_have_before_filter :get_model_and_verify_it, :only => [:destroy, :del, :edit, :update, :show]
+
   context 'get table_structure' do
     setup do
       get :table_structure, {:klass => Article.name.underscore}

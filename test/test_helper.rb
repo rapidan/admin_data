@@ -46,6 +46,9 @@ require 'flexmock'
 #require all factories
 Dir[File.join(File.dirname(__FILE__), 'factories', '*.rb')].each {|f| require f}
 
+#require should macros
+Dir[File.join(File.dirname(__FILE__), 'shoulda_macros', '*.rb')].each {|f| require f}
+
 AdminDataConfig.set = {
   :plugin_dir => File.join(File.dirname(__FILE__),'..'),
   :will_paginate_per_page => 50,

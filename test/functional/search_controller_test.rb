@@ -24,6 +24,9 @@ class AdminData::SearchControllerTest < ActionController::TestCase
                                                     :action => :advance_search,
                                                     :klass => 'article'
 
+  should_have_before_filter :get_class_from_params
+  should_have_before_filter :ensure_valid_children_klass, :only => [:search]
+  
   context 'get search car has_many association' do
     setup do
       Vehicle::Door.delete_all

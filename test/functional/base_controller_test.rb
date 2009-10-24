@@ -14,6 +14,10 @@ class AdminData::BaseControllerTest < ActionController::TestCase
     end
   end
 
+  should_have_before_filter :ensure_is_allowed_to_view
+  should_have_before_filter :build_klasses
+  should_have_before_filter :build_drop_down_for_klasses
+
   context 'testing private method extend_with_plugins_models' do
     setup do
       @controller = AdminData::DiagnosticController.new
