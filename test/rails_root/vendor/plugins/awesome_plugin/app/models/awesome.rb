@@ -1,0 +1,3 @@
+class Awesome < ActiveRecord
+  
+end
