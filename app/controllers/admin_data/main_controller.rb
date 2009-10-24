@@ -25,24 +25,24 @@ class AdminData::MainController  < AdminData::BaseController
       end
       add_index_statements.sort.each { |index| @indexes << index }
     end
+    respond_to {|format| format.html}
   end
 
   def all_models
-    render
+    respond_to {|format| format.html}
   end
 
   def index
-    render
+    respond_to {|format| format.html}
   end
 
   def show
     @page_title = "#{@klass.name.underscore}:#{@model.id}"
-    render
+    respond_to {|format| format.html}
   end
 
   def destroy
     @klass.send(:destroy, params[:id])
-    flash[:success] = 'Record was destroyed'
     redirect_to admin_data_search_path(:klass => @klass.name.underscore)
   end
 
@@ -54,12 +54,13 @@ class AdminData::MainController  < AdminData::BaseController
 
   def edit
     @page_title = "edit #{@klass.name.underscore}:#{@model.id}"
-    render
+    respond_to {|format| format.html}
   end
 
   def new
     @page_title = "new #{@klass.name.underscore}"
     @model = @klass.send(:new)
+    respond_to {|format| format.html}
   end
 
   def update
@@ -93,13 +94,22 @@ class AdminData::MainController  < AdminData::BaseController
   end
 
   def get_model_and_verify_it
-    primary_key = @klass.primary_key
-    m = "find_by_#{primary_key}".intern
-    @model = @klass.send(m, params[:id])
-    if @model.blank?
-      render :text => "<h2>#{@klass.name} not found: #{params[:id]}</h2>", :status => :not_found 
+    primary_key = @klass.primary_key.intern
+    condition = {primary_key => params[:id]}
+
+    find_conditions_proc = AdminDataConfig.setting[:find_conditions]
+    if find_conditions_proc
+      find_conditions = find_conditions_proc.call(params)
+      if find_conditions && find_conditions.has_key?(@klass.name.underscore)
+         condition = find_conditions.fetch(@klass.name.underscore).fetch(:conditions)
+      end
+    end
+
+    @model = @klass.send('find', :first, :conditions => condition)
+    unless @model
+      render :text => "<h2>#{@klass.name} not found: #{params[:id]}</h2>", 
+             :status => :not_found
     end
   end
-
 
 end

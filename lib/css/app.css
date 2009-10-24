@@ -77,9 +77,11 @@ table#view_table td {
 	padding: 6px 6px 6px 12px;
 }
 
-table#view_table tr.highlight{
-  background-color: yellow;
+
+table#view_table tr:hover {
+  background: #FFFFC0;
 }
+
 
 .logo {float: left;}
 
@@ -135,5 +137,21 @@ table#view_table tr.highlight{
 .error {
    color: red;
    font-size: 16px;
+}
+
+
+#noscript-warning {
+  background-color:#AE0000;
+  color:#FFFFFF;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:140%;
+  font-weight:bold;
+  left:0;
+  padding:5px 0;
+  position:fixed;
+  text-align:center;
+  top:0;
+  width:100%;
+  z-index:101;
 }
 
