@@ -14,6 +14,7 @@ Dir[File.join(File.dirname(__FILE__), '..', 'lib', 'admin_data', '*.rb')].each {
 AdminDataConfig.initialize_defaults
 
 #require all the controllers plugins needs
+require File.join(File.dirname(__FILE__), '..', 'app', 'controllers', 'admin_data', 'base_controller.rb')
 Dir[File.join(File.dirname(__FILE__), '..', 'app', 'controllers', 'admin_data', '*.rb')].each {|f| require f}
 
 # make sure that plugin views have access to helpers
