@@ -23,22 +23,22 @@ class AdminData::BaseControllerTest < ActionController::TestCase
       @controller = AdminData::DiagnosticController.new
     end
 
-    should 'get awesome model filename from the awesome plugin' do
+    should 'get woofer model filename from the car audio plugin' do
       model_names = @controller.send(:extend_with_plugins_models, [])
       assert model_names.any?
-      assert model_names.include?("awesome.rb")
+      assert model_names.include?("woofer.rb")
     end
 
-    should 'extend only with the new model filename config.rb' do
-      model_names = @controller.send(:extend_with_plugins_models, ["config.rb"])
+    should 'extend only with the new model filename article.rb' do
+      model_names = @controller.send(:extend_with_plugins_models, ["article.rb"])
       assert_equal 2, model_names.size
-      assert_equal ["config.rb", "awesome.rb"], model_names      
+      assert_equal ["article.rb", "woofer.rb"], model_names
     end
 
     should 'extend only if exist new model filenames' do
-      model_names = @controller.send(:extend_with_plugins_models, ["config.rb", "awesome.rb"])
+      model_names = @controller.send(:extend_with_plugins_models, ["article.rb", "woofer.rb"])
       assert_equal 2, model_names.size
-      assert_equal ["config.rb", "awesome.rb"], model_names
+      assert_equal ["article.rb", "woofer.rb"], model_names
     end
   end
 

@@ -93,10 +93,11 @@ class AdminData::MainControllerTest < ActionController::TestCase
     setup do
       get :all_models
     end
+
     should_respond_with :success
     should_assign_to :klasses
-    should 'have 5  models' do
-      assert_equal 6, assigns(:klasses).size
+    should 'have 6  models' do
+      assert_equal 7, assigns(:klasses).size
     end
     should 'have Home tab selected' do
        assert_select('#main-navigation ul li.first.active')

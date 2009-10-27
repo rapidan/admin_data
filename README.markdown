@@ -30,6 +30,8 @@ associated record is not present then there will be no link.
 
 * Supports name spaced models like Vehicle::Car and Vehicle::Engine.
 
+* Models defined in the app/models folder inside a plugin are picked up.
+
 * Next to association a count of number of associated records is shown. 
 
 * Al the associated records are links so one can navigate from record to record.
@@ -155,6 +157,8 @@ Report any bug at [http://github.com/neerajdotname/admin_data/issues](http://git
 * [Alexey Borzenkov](http://github.com/snaury)
 
 * [Alex Rothenberg](http://github.com/alexrothenberg)
+
+* [Paco Guzman](http://github.com/pacoguzman)
 
 ## License
 
